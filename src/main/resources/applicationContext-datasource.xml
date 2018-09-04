@@ -76,6 +76,7 @@
 
     </bean>
 
+    <!--mybatis的扫描，为service层提供dao层接口-->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.mmall.dao"/>
     </bean>
