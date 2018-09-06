@@ -49,4 +49,19 @@ public class UserController {
         return ServiceResponse.createBySuccess();
     }
 
+    @RequestMapping(value = "register.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServiceResponse<String> register(User user){
+        return iUserService.register(user);
+    }
+
+    @RequestMapping(value = "checkValid.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServiceResponse<String> checkValid(String str,String type){
+        return iUserService.checkValid(str,type);
+    }
+
+
+
+
 }
