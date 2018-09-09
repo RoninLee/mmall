@@ -11,9 +11,14 @@ import com.mmall.pojo.User;
  * @description: 用户登陆API
  **/
 public interface IUserService {
+
     ServiceResponse<User> login (String username, String password);
 
     ServiceResponse<String> register(User user);
 
     ServiceResponse<String> checkValid(String str,String type);
+
+    ServiceResponse<String> forgetGetQuestion(String username);
+
+    ServiceResponse<String> forgetCheckAnswer(String username,String question,String answer);
 }
