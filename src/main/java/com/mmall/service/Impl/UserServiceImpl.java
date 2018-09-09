@@ -99,9 +99,9 @@ public class UserServiceImpl implements IUserService {
         int forgetCheckAnswer = userMapper.forgetCheckAnswer(username, question, answer);
         if(forgetCheckAnswer>0){
             //说明问题及问题的答案是这个用户的并且是正确的
-            String forgetToekn = UUID.randomUUID().toString();
-            TokenCache.setKey("token_"+username,forgetToekn);
-            return ServiceResponse.createBySuccess(forgetToekn);
+            String forgetToken = UUID.randomUUID().toString();
+            TokenCache.setKey("token_"+username,forgetToken);
+            return ServiceResponse.createBySuccess(forgetToken);
         }
         return ServiceResponse.createByErrorMsg("答案错误");
     }
