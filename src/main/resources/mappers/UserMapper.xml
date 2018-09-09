@@ -133,6 +133,7 @@
       </if>
       <if test="updateTime != null" >
         update_time = now(),
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -173,5 +174,10 @@
     and question = #{question}
     and answer = #{answer}
   </select>
+  <update id="forgetResetPassword" parameterType="map">
+    UPDATE mmall_user
+    SET password = #{passwordNew},update_time=now()
+    where username = #{username}
+  </update>
 
 </mapper>

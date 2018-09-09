@@ -18,6 +18,8 @@ import java.util.concurrent.ExecutionException;
 public class TokenCache {
     private static Logger logger = LoggerFactory.getLogger(TokenCache.class);
 
+    public static final String TOKEN_PREFIX="token_";
+
     //LRU算法 当缓存数量达到最大时，LoadingCache会通过LRU算法找到使用次数最少的进行清除
     private static LoadingCache<String,String> localCache = CacheBuilder.newBuilder().initialCapacity(1000).maximumSize(10000)
             .build(new CacheLoader<String, String>() {

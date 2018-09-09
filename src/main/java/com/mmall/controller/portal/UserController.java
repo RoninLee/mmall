@@ -2,8 +2,10 @@ package com.mmall.controller.portal;
 
 import com.mmall.common.Const;
 import com.mmall.common.ServiceResponse;
+import com.mmall.common.TokenCache;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +63,7 @@ public class UserController {
         return iUserService.checkValid(str,type);
     }
 
-    @RequestMapping(value = "getUserInfo.do",method = RequestMethod.GET)
+    @RequestMapping(value = "get_userInfo.do",method = RequestMethod.GET)
     @ResponseBody
     public ServiceResponse<String> getUserInfo(HttpSession session){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -83,6 +85,10 @@ public class UserController {
         return iUserService.forgetCheckAnswer(username, question, answer);
     }
 
-
+    @RequestMapping(value = "forge_reset_password.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServiceResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken){
+        return iUserService.forgetResetPassword(username, passwordNew, forgetToken);
+    }
 
 }
