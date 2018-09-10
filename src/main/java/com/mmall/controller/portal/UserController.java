@@ -101,4 +101,21 @@ public class UserController {
         return iUserService.resetPassword(passwordOld,passwordNew,user);
     }
 
+    @RequestMapping(value = "update_Info.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServiceResponse<User> updateInfo(User user,HttpSession session){
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null){
+            return ServiceResponse.createByErrorMsg("用户未登录");
+        }
+        user.setId(currentUser.getId());
+        user.setUsername(currentUser.getUsername());
+        ServiceResponse<User> response = iUserService.updateInfo(user);
+        if(response.isSussess()){
+            response.getData().setUsername(currentUser.getUsername());
+            session.setAttribute(Const.CURRENT_USER,response.getData());
+        }
+        return response;
+    }
+
 }

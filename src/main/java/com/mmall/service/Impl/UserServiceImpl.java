@@ -100,7 +100,7 @@ public class UserServiceImpl implements IUserService {
         if(forgetCheckAnswer>0){
             //说明问题及问题的答案是这个用户的并且是正确的
             String forgetToken = UUID.randomUUID().toString();
-            TokenCache.setKey("token_"+username,forgetToken);
+            TokenCache.setKey(TokenCache.TOKEN_PREFIX+username,forgetToken);
             return ServiceResponse.createBySuccess(forgetToken);
         }
         return ServiceResponse.createByErrorMsg("答案错误");
@@ -114,7 +114,7 @@ public class UserServiceImpl implements IUserService {
         if (checkValid.isSussess()){
             return ServiceResponse.createByErrorMsg("用户不存在");
         }
-        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX);
+        String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
         if (StringUtils.isBlank(token)){
             return ServiceResponse.createByErrorMsg("token无效或者过期");
         }
@@ -143,4 +143,23 @@ public class UserServiceImpl implements IUserService {
         return ServiceResponse.createByErrorMsg("修改密码失败");
     }
 
+    public ServiceResponse<User> updateInfo(User user){
+        //username不能被更新
+        //email也要进行校验，不能是已存在的Email
+        int checkEmailByUserId = userMapper.checkEmailByUserId(user.getId(), user.getEmail());
+        if (checkEmailByUserId > 0){
+            return ServiceResponse.createByErrorMsg("邮箱已被注册");
+        }
+        User updateUser = new User();
+        updateUser.setId(user.getId());
+        updateUser.setEmail(user.getEmail());
+        updateUser.setQuestion(user.getQuestion());
+        updateUser.setAnswer(user.getAnswer());
+        updateUser.setPhone(user.getPhone());
+        int updateInfo = userMapper.updateByPrimaryKeySelective(updateUser);
+        if (updateInfo > 0){
+            return ServiceResponse.createBySuccess("更新信息成功",updateUser);
+        }
+        return ServiceResponse.createByErrorMsg("修改信息失败");
+    }
 }
