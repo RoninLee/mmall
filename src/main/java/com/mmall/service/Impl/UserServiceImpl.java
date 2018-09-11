@@ -162,4 +162,13 @@ public class UserServiceImpl implements IUserService {
         }
         return ServiceResponse.createByErrorMsg("修改信息失败");
     }
+
+    public ServiceResponse<User> getUserInfo(int userId){
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null){
+            return ServiceResponse.createByErrorMsg("找不到当前用户");
+        }
+        user.setPassword(StringUtils.EMPTY);
+        return ServiceResponse.createBySuccess(user);
+    }
 }

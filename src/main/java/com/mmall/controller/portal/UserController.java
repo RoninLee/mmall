@@ -1,6 +1,7 @@
 package com.mmall.controller.portal;
 
 import com.mmall.common.Const;
+import com.mmall.common.ResponserCode;
 import com.mmall.common.ServiceResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.pojo.User;
@@ -116,6 +117,16 @@ public class UserController {
             session.setAttribute(Const.CURRENT_USER,response.getData());
         }
         return response;
+    }
+
+    @RequestMapping(value = "get_information.do",method = RequestMethod.GET)
+    @ResponseBody
+    public ServiceResponse<User> getInformation(HttpSession session){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServiceResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"未登录，需要强制登录status=10");
+        }
+        return iUserService.getUserInfo(user.getId());
     }
 
 }
