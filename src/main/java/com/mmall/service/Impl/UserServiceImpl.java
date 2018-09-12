@@ -1,7 +1,7 @@
 package com.mmall.service.Impl;
 
 import com.mmall.common.Const;
-import com.mmall.common.ServiceResponse;
+import com.mmall.common.ServerResponse;
 import com.mmall.common.TokenCache;
 import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
@@ -28,27 +28,27 @@ public class UserServiceImpl implements IUserService {
     private UserMapper userMapper;
 
     @Override
-    public ServiceResponse<User> login(String username, String password) {
+    public ServerResponse<User> login(String username, String password) {
         int resultCount = userMapper.checkUsername(username);
         if (resultCount == 0 ){
-            return ServiceResponse.createByErrorMsg("用户名不存在");
+            return ServerResponse.createByErrorMsg("用户名不存在");
         }
         String md5Password = MD5Util.MD5EncodeUtf8(password);
         User user = userMapper.selectLogin(username, md5Password);
         if(user==null){
-            return ServiceResponse.createByErrorMsg("密码错误");
+            return ServerResponse.createByErrorMsg("密码错误");
         }
         user.setPassword(StringUtils.EMPTY);
-        return ServiceResponse.createBySuccess("登录成功",user);
+        return ServerResponse.createBySuccess("登录成功",user);
     }
 
-    public ServiceResponse<String> register(User user){
-        ServiceResponse<String> checkUsername = this.checkValid(user.getUsername(),Const.USERNAME);
+    public ServerResponse<String> register(User user){
+        ServerResponse<String> checkUsername = this.checkValid(user.getUsername(),Const.USERNAME);
         if(!checkUsername.isSussess()){
             return checkUsername;
         }
 
-        ServiceResponse<String> checkEmail = this.checkValid(user.getEmail(),Const.EMAIL);
+        ServerResponse<String> checkEmail = this.checkValid(user.getEmail(),Const.EMAIL);
         if(!checkEmail.isSussess()){
             return checkEmail;
         }
@@ -58,97 +58,97 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
         int resultCount = userMapper.insert(user);
         if(resultCount == 0 ){
-            return ServiceResponse.createByErrorMsg("注册失败");
+            return ServerResponse.createByErrorMsg("注册失败");
         }
-        return ServiceResponse.createBySuccess("注册成功");
+        return ServerResponse.createBySuccess("注册成功");
     }
 
-    public ServiceResponse<String> checkValid(String str,String type){
+    public ServerResponse<String> checkValid(String str,String type){
         if(StringUtils.isNoneBlank(type)){
             if(Const.EMAIL.equals(type)) {
                 int resultCount = userMapper.checkUsername(str);
                 if (resultCount > 0) {
-                    return ServiceResponse.createByErrorMsg("用户名已存在");
+                    return ServerResponse.createByErrorMsg("用户名已存在");
                 }
             }
             if(Const.EMAIL.equals(type)){
                 int checkEmail = userMapper.checkEmail(str);
                 if(checkEmail > 0){
-                    return ServiceResponse.createByErrorMsg("邮箱已存在");
+                    return ServerResponse.createByErrorMsg("邮箱已存在");
                 }
             }
         }else {
-            return ServiceResponse.createByErrorMsg("参数错误");
+            return ServerResponse.createByErrorMsg("参数错误");
         }
-        return ServiceResponse.createBySuccess("校验成功");
+        return ServerResponse.createBySuccess("校验成功");
     }
 
-    public ServiceResponse<String> forgetGetQuestion(String username){
-        ServiceResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
+    public ServerResponse<String> forgetGetQuestion(String username){
+        ServerResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
         if(checkValid.isSussess()){
-            return ServiceResponse.createByErrorMsg("用户不存在");
+            return ServerResponse.createByErrorMsg("用户不存在");
         }
         String forgetGetQuestion = userMapper.forgetGetQuestion(username);
         if(StringUtils.isBlank(forgetGetQuestion)){
-            return ServiceResponse.createByErrorMsg("找回密码的问题为空");
+            return ServerResponse.createByErrorMsg("找回密码的问题为空");
         }
-        return ServiceResponse.createBySuccess(forgetGetQuestion);
+        return ServerResponse.createBySuccess(forgetGetQuestion);
     }
 
-    public ServiceResponse<String> forgetCheckAnswer(String username,String question,String answer){
+    public ServerResponse<String> forgetCheckAnswer(String username,String question,String answer){
         int forgetCheckAnswer = userMapper.forgetCheckAnswer(username, question, answer);
         if(forgetCheckAnswer>0){
             //说明问题及问题的答案是这个用户的并且是正确的
             String forgetToken = UUID.randomUUID().toString();
             TokenCache.setKey(TokenCache.TOKEN_PREFIX+username,forgetToken);
-            return ServiceResponse.createBySuccess(forgetToken);
+            return ServerResponse.createBySuccess(forgetToken);
         }
-        return ServiceResponse.createByErrorMsg("答案错误");
+        return ServerResponse.createByErrorMsg("答案错误");
     }
 
-    public ServiceResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
+    public ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken){
         if (StringUtils.isBlank(forgetToken)){
-            return ServiceResponse.createByErrorMsg("参数错误，token需要传递");
+            return ServerResponse.createByErrorMsg("参数错误，token需要传递");
         }
-        ServiceResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
+        ServerResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
         if (checkValid.isSussess()){
-            return ServiceResponse.createByErrorMsg("用户不存在");
+            return ServerResponse.createByErrorMsg("用户不存在");
         }
         String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);
         if (StringUtils.isBlank(token)){
-            return ServiceResponse.createByErrorMsg("token无效或者过期");
+            return ServerResponse.createByErrorMsg("token无效或者过期");
         }
         if(StringUtils.equals(forgetToken,token)){
             String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
             int rowCount = userMapper.forgetResetPassword(username, md5Password);
             if (rowCount>0){
-                return ServiceResponse.createBySuccess("修改密码成功");
+                return ServerResponse.createBySuccess("修改密码成功");
             }
         }else {
-            return ServiceResponse.createByErrorMsg("token错误，请重新获取重置密码的token");
+            return ServerResponse.createByErrorMsg("token错误，请重新获取重置密码的token");
         }
-        return ServiceResponse.createByErrorMsg("修改密码失败");
+        return ServerResponse.createByErrorMsg("修改密码失败");
     }
 
-    public ServiceResponse<String> resetPassword(String passwordOld,String passwordNew,User user){
+    public ServerResponse<String> resetPassword(String passwordOld,String passwordNew,User user){
         int checkUserPassword = userMapper.checkUserPassword(user.getId(), MD5Util.MD5EncodeUtf8(passwordOld));
         if(checkUserPassword == 0 ){
-            return ServiceResponse.createByErrorMsg("旧密码输入错误");
+            return ServerResponse.createByErrorMsg("旧密码输入错误");
         }
         user.setPassword(MD5Util.MD5EncodeUtf8(passwordNew));
         int resetPassword = userMapper.updateByPrimaryKeySelective(user);
         if (resetPassword > 0){
-            return ServiceResponse.createBySuccess("修改密码成功");
+            return ServerResponse.createBySuccess("修改密码成功");
         }
-        return ServiceResponse.createByErrorMsg("修改密码失败");
+        return ServerResponse.createByErrorMsg("修改密码失败");
     }
 
-    public ServiceResponse<User> updateInfo(User user){
+    public ServerResponse<User> updateInfo(User user){
         //username不能被更新
         //email也要进行校验，不能是已存在的Email
         int checkEmailByUserId = userMapper.checkEmailByUserId(user.getId(), user.getEmail());
         if (checkEmailByUserId > 0){
-            return ServiceResponse.createByErrorMsg("邮箱已被注册");
+            return ServerResponse.createByErrorMsg("邮箱已被注册");
         }
         User updateUser = new User();
         updateUser.setId(user.getId());
@@ -158,17 +158,17 @@ public class UserServiceImpl implements IUserService {
         updateUser.setPhone(user.getPhone());
         int updateInfo = userMapper.updateByPrimaryKeySelective(updateUser);
         if (updateInfo > 0){
-            return ServiceResponse.createBySuccess("更新信息成功",updateUser);
+            return ServerResponse.createBySuccess("更新信息成功",updateUser);
         }
-        return ServiceResponse.createByErrorMsg("修改信息失败");
+        return ServerResponse.createByErrorMsg("修改信息失败");
     }
 
-    public ServiceResponse<User> getUserInfo(int userId){
+    public ServerResponse<User> getUserInfo(int userId){
         User user = userMapper.selectByPrimaryKey(userId);
         if(user == null){
-            return ServiceResponse.createByErrorMsg("找不到当前用户");
+            return ServerResponse.createByErrorMsg("找不到当前用户");
         }
         user.setPassword(StringUtils.EMPTY);
-        return ServiceResponse.createBySuccess(user);
+        return ServerResponse.createBySuccess(user);
     }
 }

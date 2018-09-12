@@ -1,6 +1,6 @@
 package com.mmall.service;
 
-import com.mmall.common.ServiceResponse;
+import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 
 /**
@@ -12,21 +12,21 @@ import com.mmall.pojo.User;
  **/
 public interface IUserService {
 
-    ServiceResponse<User> login (String username, String password);
+    ServerResponse<User> login (String username, String password);
 
-    ServiceResponse<String> register(User user);
+    ServerResponse<String> register(User user);
 
-    ServiceResponse<String> checkValid(String str,String type);
+    ServerResponse<String> checkValid(String str,String type);
 
-    ServiceResponse<String> forgetGetQuestion(String username);
+    ServerResponse<String> forgetGetQuestion(String username);
 
-    ServiceResponse<String> forgetCheckAnswer(String username,String question,String answer);
+    ServerResponse<String> forgetCheckAnswer(String username,String question,String answer);
 
-    ServiceResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken);
+    ServerResponse<String> forgetResetPassword(String username,String passwordNew,String forgetToken);
 
-    ServiceResponse<String> resetPassword(String passwordOld,String passwordNew,User user);
+    ServerResponse<String> resetPassword(String passwordOld,String passwordNew,User user);
 
-    ServiceResponse<User> updateInfo(User user);
+    ServerResponse<User> updateInfo(User user);
 
-    ServiceResponse<User> getUserInfo(int userId);
+    ServerResponse<User> getUserInfo(int userId);
 }
