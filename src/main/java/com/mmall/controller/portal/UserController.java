@@ -171,6 +171,11 @@ public class UserController {
         return response;
     }
 
+    /**
+     * 获取当前用户的信息
+     * @param session
+     * @return
+     */
     @RequestMapping(value = "get_information.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getInformation(HttpSession session) {
