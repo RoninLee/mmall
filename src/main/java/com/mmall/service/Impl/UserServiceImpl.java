@@ -64,7 +64,7 @@ public class UserServiceImpl implements IUserService {
 
     public ServerResponse<String> checkValid(String str,String type){
         if(StringUtils.isNoneBlank(type)){
-            if(Const.EMAIL.equals(type)) {
+            if(Const.USERNAME.equals(type)) {
                 int resultCount = userMapper.checkUsername(str);
                 if (resultCount > 0) {
                     return ServerResponse.createByErrorMsg("用户名已存在");
@@ -83,7 +83,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     public ServerResponse<String> forgetGetQuestion(String username){
-        ServerResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
+        ServerResponse<String> checkValid = this.checkValid(username, Const.USERNAME);
         if(checkValid.isSussess()){
             return ServerResponse.createByErrorMsg("用户不存在");
         }
@@ -109,7 +109,7 @@ public class UserServiceImpl implements IUserService {
         if (StringUtils.isBlank(forgetToken)){
             return ServerResponse.createByErrorMsg("参数错误，token需要传递");
         }
-        ServerResponse<String> checkValid = this.checkValid(username, Const.CURRENT_USER);
+        ServerResponse<String> checkValid = this.checkValid(username, Const.USERNAME);
         if (checkValid.isSussess()){
             return ServerResponse.createByErrorMsg("用户不存在");
         }

@@ -9,7 +9,7 @@ package com.mmall.common;
  **/
 public enum ResponserCode {
     SUCCESS(0,"SUCCESS"),
-    ERROR(0,"ERROR"),
+    ERROR(1,"ERROR"),
     NEED_LOGIN(10,"NEED_LOGIN"),
     ILLEGAL_ARGUMENT(2,"ILLEGAL_ARGUMENT");
 
