@@ -38,7 +38,7 @@ public class ICategoryServiceImpl implements ICategoryService {
         Category category = new Category();
         category.setParentId(parentId);
         category.setName(categoryName);
-        category.setStatus(true); //这个分类是可用的
+        category.setStatus(true);           //这个分类是可用的
 
         int rowCount = categoryMapper.insert(category);
         if(rowCount > 0 ){
