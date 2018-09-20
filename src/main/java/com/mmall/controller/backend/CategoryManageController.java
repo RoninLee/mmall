@@ -87,6 +87,7 @@ public class CategoryManageController {
         if(user == null){
             return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
         }
+
         if (iUserServer.checkAdminRole(user).isSussess()){
             //查询当前节点的id和递归子节点的id
             return iCategoryService.getCategoryAndDeepChildrenCategory(categoryId);
