@@ -171,8 +171,6 @@ public class UserServiceImpl implements IUserService {
         return ServerResponse.createBySuccess(user);
     }
 
-    //backend
-
     /**
      * 校验是否是管理员
      * @param user
