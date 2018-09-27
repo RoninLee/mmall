@@ -25,6 +25,7 @@ import java.util.Set;
  **/
 @Service("iCategoryService")
 public class ICategoryServiceImpl implements ICategoryService {
+
     private Logger logger = LoggerFactory.getLogger(ICategoryServiceImpl.class);
 
     @Autowired
