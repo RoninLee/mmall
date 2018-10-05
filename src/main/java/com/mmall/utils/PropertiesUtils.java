@@ -9,11 +9,15 @@ import java.io.InputStreamReader;
 import java.util.Properties;
 
 /**
- * Created by geely
- */
-public class PropertiesUtil {
+ * @program: mmall
+ * @author: RoninLee
+ * @Email: zlli233@qq.com
+ * @create: 2018-10-05 22:40
+ * @description: 流读取配置文件的工具类
+ **/
+public class PropertiesUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
+    private static Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
 
     private static Properties props;
 
@@ -21,7 +25,7 @@ public class PropertiesUtil {
         String fileName = "mmall.properties";
         props = new Properties();
         try {
-            props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
+            props.load(new InputStreamReader(PropertiesUtils.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
         } catch (IOException e) {
             logger.error("配置文件读取异常",e);
         }
@@ -43,7 +47,4 @@ public class PropertiesUtil {
         }
         return value.trim();
     }
-
-
-
 }

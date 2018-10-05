@@ -22,7 +22,7 @@ import javax.servlet.http.HttpSession;
  * @description: 商品管理
  **/
 @Controller
-@RequestMapping("/manage/product")
+@RequestMapping(value = "/manage/product")
 public class ProductManageController {
 
     @Autowired
@@ -45,7 +45,7 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping("set_sale_status.do")
+    @RequestMapping(value = "set_sale_status.do")
     @ResponseBody
     public ServerResponse setSaleStatus(HttpSession session, Integer productId, Integer status){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
@@ -53,8 +53,22 @@ public class ProductManageController {
             return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录");
         }
         if(iUserService.checkAdminRole(user).isSussess()){
-            //填充增加或修改产品的业务逻辑
             return  iProductService.setSaleStatus(productId, status);
+        }else{
+            return ServerResponse.createByErrorMsg("无权限操作");
+        }
+    }
+
+    @RequestMapping(value = "detail.do")
+    @ResponseBody
+    public ServerResponse getDetail(HttpSession session, Integer productId){
+        User user = (User) session.getAttribute(Const.CURRENT_USER);
+        if(user == null){
+            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录");
+        }
+        if(iUserService.checkAdminRole(user).isSussess()){
+            //填充业务
+            return iProductService.manageProductDetail(productId);
         }else{
             return ServerResponse.createByErrorMsg("无权限操作");
         }
