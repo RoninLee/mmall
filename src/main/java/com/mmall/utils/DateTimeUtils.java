@@ -32,6 +32,7 @@ public class DateTimeUtils {
         return dateTime.toString(formatStr);
     }
 
+    //重载以上两个方法，时间格式默认"yyyy-MM-dd HH:mm:ss"
     public static Date strToDate(String dateTimeStr){
         DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(STANFARD_FORMAT);
         DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
