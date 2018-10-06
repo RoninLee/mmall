@@ -81,6 +81,7 @@ public class ProductServiceImpl implements IProductService {
         return ServerResponse.createBySuccess(productDetailVo);
     }
 
+    //类型转换方法
     private ProductDetailVo assembleProductDetailVo(Product product){
         ProductDetailVo productDetailVo = new ProductDetailVo();
         productDetailVo.setId(product.getId());
@@ -93,7 +94,6 @@ public class ProductServiceImpl implements IProductService {
         productDetailVo.setName(product.getName());
         productDetailVo.setStatus(product.getStatus());
         productDetailVo.setStock(product.getStock());
-
         productDetailVo.setImageHost(PropertiesUtils.getProperty("ftp.server.http.prefix","http://image.ronin.com/"));
 
         Category category = categoryMapper.selectByPrimaryKey(product.getCategoryId());
