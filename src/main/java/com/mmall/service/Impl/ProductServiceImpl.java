@@ -11,6 +11,7 @@ import com.mmall.utils.DateTimeUtils;
 import com.mmall.utils.PropertiesUtils;
 import com.mmall.vo.ProductDetailVo;
 import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
