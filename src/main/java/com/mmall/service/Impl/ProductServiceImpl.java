@@ -1,5 +1,7 @@
 package com.mmall.service.Impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mmall.common.ResponserCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
@@ -10,10 +12,14 @@ import com.mmall.service.IProductService;
 import com.mmall.utils.DateTimeUtils;
 import com.mmall.utils.PropertiesUtils;
 import com.mmall.vo.ProductDetailVo;
+import com.mmall.vo.ProductListVo;
 import org.apache.commons.lang3.StringUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @program: mmall
@@ -110,4 +116,32 @@ public class ProductServiceImpl implements IProductService {
         return productDetailVo;
     }
 
+    public  ServerResponse<PageInfo> getProductList(int pageNum,int pageSize){
+        //startPage--start
+        //填充自己的sql查询语句
+        //pageHelper--收尾
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productMapper.selectList();
+        List<ProductListVo> productListVoList = new ArrayList<>();
+        for (Product product:productList){
+            ProductListVo productListVo = assembleProductListVo(product);
+            productListVoList.add(productListVo);
+        }
+        PageInfo pageResult = new PageInfo(productList);
+        pageResult.setList(productListVoList);
+        return ServerResponse.createBySuccess(pageResult);
+    }
+
+    private ProductListVo assembleProductListVo(Product product){
+        ProductListVo productListVo = new ProductListVo();
+        productListVo.setId(product.getId());
+        productListVo.setStatus(product.getStatus());
+        productListVo.setCategoryId(product.getCategoryId());
+        productListVo.setMainImage(product.getMainImage());
+        productListVo.setName(product.getName());
+        productListVo.setPrice(product.getPrice());
+        productListVo.setSubtitle(product.getSubtitle());
+        productListVo.setImageHost(PropertiesUtils.getProperty("ftp.server.http.prefix","http://image.ronin.com/"));
+        return productListVo;
+    }
 }
