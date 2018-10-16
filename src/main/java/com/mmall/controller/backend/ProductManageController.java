@@ -90,16 +90,16 @@ public class ProductManageController {
         }
     }
 
-    @RequestMapping(value = "list.do")
+    @RequestMapping(value = "search .do")
     @ResponseBody
-    public ServerResponse getList1(HttpSession session, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,@RequestParam(value = "pageSize" , defaultValue = "10") int pageSize){
+    public ServerResponse productSearch(HttpSession session,String productName,Integer productId, @RequestParam(value = "pageNum",defaultValue = "1") int pageNum,@RequestParam(value = "pageSize" , defaultValue = "10") int pageSize){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
             return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录");
         }
         if(iUserService.checkAdminRole(user).isSussess()){
             //填充业务
-            return iProductService.getProductList(pageNum, pageSize);
+            return iProductService.searchProduct(productName, productId, pageNum, pageSize);
         }else{
             return ServerResponse.createByErrorMsg("无权限操作");
         }
