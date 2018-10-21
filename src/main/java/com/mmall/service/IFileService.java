@@ -8,4 +8,5 @@ package com.mmall.service;
  * @description: 文件处理的服务
  **/
 public interface IFileService {
+
 }

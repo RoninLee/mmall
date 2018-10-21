@@ -8,4 +8,5 @@ package com.mmall.service.Impl;
  * @description: 文件处理服务的实现类
  **/
 public class FileServiceImpl {
+
 }
