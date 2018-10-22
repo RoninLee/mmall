@@ -7,7 +7,7 @@ package com.mmall.common;
  * @create: 2018-09-06 19:55
  * @description: 返回对象的状态类型
  **/
-public enum ResponserCode {
+public enum ResponseCode {
     SUCCESS(0,"SUCCESS"),
     ERROR(1,"ERROR"),
     NEED_LOGIN(10,"NEED_LOGIN"),
@@ -16,7 +16,7 @@ public enum ResponserCode {
     private final int code;
     private final String desc;
 
-    ResponserCode(int code, String desc) {
+    ResponseCode(int code, String desc) {
         this.code = code;
         this.desc = desc;
     }

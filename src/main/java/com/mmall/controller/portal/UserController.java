@@ -1,7 +1,7 @@
 package com.mmall.controller.portal;
 
 import com.mmall.common.Const;
-import com.mmall.common.ResponserCode;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
@@ -37,7 +37,7 @@ public class UserController {
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session) {
         ServerResponse<User> response = iUserService.login(username, password);
-        if (response.isSussess()) {
+        if (response.isSuccess()) {
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
         return response;
@@ -163,7 +163,7 @@ public class UserController {
         user.setId(currentUser.getId());
         user.setUsername(currentUser.getUsername());
         ServerResponse<User> response = iUserService.updateInfo(user);
-        if (response.isSussess()) {
+        if (response.isSuccess()) {
             response.getData().setUsername(currentUser.getUsername());
             session.setAttribute(Const.CURRENT_USER, response.getData());
         }
@@ -180,7 +180,7 @@ public class UserController {
     public ServerResponse<User> getInformation(HttpSession session) {
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if (user == null) {
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(), "未登录，需要强制登录status=10");
         }
         return iUserService.getUserInfo(user.getId());
     }

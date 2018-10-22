@@ -35,7 +35,7 @@ public class UserManagerController {
     @ResponseBody
     public ServerResponse<User> login(String username, String password, HttpSession session){
         ServerResponse<User> response = iUserService.login(username, password);
-        if (response.isSussess()){
+        if (response.isSuccess()){
             User user = response.getData();
             if (user.getRole() == Const.Role.ROLE_ADMIN){
                 //说明登录的是管理员

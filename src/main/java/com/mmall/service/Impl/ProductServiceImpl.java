@@ -2,7 +2,7 @@ package com.mmall.service.Impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mmall.common.ResponserCode;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.dao.CategoryMapper;
 import com.mmall.dao.ProductMapper;
@@ -64,7 +64,7 @@ public class ProductServiceImpl implements IProductService {
 
     public ServerResponse<String> setSaleStatus(Integer productId,Integer status){
         if (productId == null || status == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.ILLEGAL_ARGUMENT.getCode(),ResponserCode.ILLEGAL_ARGUMENT.getDesc());
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         Product product = new Product();
         product.setId(productId);
@@ -78,7 +78,7 @@ public class ProductServiceImpl implements IProductService {
 
     public ServerResponse<Object> manageProductDetail(Integer productId){
         if (productId == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.ILLEGAL_ARGUMENT.getCode(),ResponserCode.ILLEGAL_ARGUMENT.getDesc());
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.ILLEGAL_ARGUMENT.getCode(),ResponseCode.ILLEGAL_ARGUMENT.getDesc());
         }
         Product product = productMapper.selectByPrimaryKey(productId);
         if (product == null){

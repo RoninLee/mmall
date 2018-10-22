@@ -43,12 +43,12 @@ public class UserServiceImpl implements IUserService {
 
     public ServerResponse<String> register(User user){
         ServerResponse<String> checkUsername = this.checkValid(user.getUsername(),Const.USERNAME);
-        if(!checkUsername.isSussess()){
+        if(!checkUsername.isSuccess()){
             return checkUsername;
         }
 
         ServerResponse<String> checkEmail = this.checkValid(user.getEmail(),Const.EMAIL);
-        if(!checkEmail.isSussess()){
+        if(!checkEmail.isSuccess()){
             return checkEmail;
         }
 
@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService {
 
     public ServerResponse<String> forgetGetQuestion(String username){
         ServerResponse<String> checkValid = this.checkValid(username, Const.USERNAME);
-        if(checkValid.isSussess()){
+        if(checkValid.isSuccess()){
             return ServerResponse.createByErrorMsg("用户不存在");
         }
         String forgetGetQuestion = userMapper.forgetGetQuestion(username);
@@ -110,7 +110,7 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMsg("参数错误，token需要传递");
         }
         ServerResponse<String> checkValid = this.checkValid(username, Const.USERNAME);
-        if (checkValid.isSussess()){
+        if (checkValid.isSuccess()){
             return ServerResponse.createByErrorMsg("用户不存在");
         }
         String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX+username);

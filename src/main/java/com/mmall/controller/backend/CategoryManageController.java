@@ -1,7 +1,7 @@
 package com.mmall.controller.backend;
 
 import com.mmall.common.Const;
-import com.mmall.common.ResponserCode;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.ICategoryService;
@@ -36,10 +36,10 @@ public class CategoryManageController {
     public ServerResponse addCategory(HttpSession session, String categoryName, @RequestParam(value = "parentId",defaultValue = "0") int parentId){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
         }
         //校验是否是管理员
-        if (iUserServer.checkAdminRole(user).isSussess()){
+        if (iUserServer.checkAdminRole(user).isSuccess()){
             //是管理员
             //增加处理分类的逻辑
             return iCategoryService.addCategory(categoryName,parentId);
@@ -53,10 +53,10 @@ public class CategoryManageController {
     public ServerResponse updateCategoryName(HttpSession session,Integer categoryId,String categoryName){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
         }
 
-        if (iUserServer.checkAdminRole(user).isSussess()){
+        if (iUserServer.checkAdminRole(user).isSuccess()){
             //更新categoryName
             return iCategoryService.updateCategoryName(categoryId, categoryName);
         }else {
@@ -69,10 +69,10 @@ public class CategoryManageController {
     public ServerResponse getCategoryChildrenByParentId(HttpSession session,Integer categoryId){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
         }
 
-        if (iUserServer.checkAdminRole(user).isSussess()){
+        if (iUserServer.checkAdminRole(user).isSuccess()){
             //查询子节点的category信息，并且不递归，保持平级
             return iCategoryService.selectCategoryChildrenByParentId(categoryId);
         }else {
@@ -85,10 +85,10 @@ public class CategoryManageController {
     public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession session,Integer categoryId){
         User user = (User) session.getAttribute(Const.CURRENT_USER);
         if(user == null){
-            return ServerResponse.createByErrorCodeMsg(ResponserCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
+            return ServerResponse.createByErrorCodeMsg(ResponseCode.NEED_LOGIN.getCode(),"用户未登录，请登录");
         }
 
-        if (iUserServer.checkAdminRole(user).isSussess()){
+        if (iUserServer.checkAdminRole(user).isSuccess()){
             //查询当前节点的id和递归子节点的id
             return iCategoryService.getCategoryAndDeepChildrenCategory(categoryId);
         }else {

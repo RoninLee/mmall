@@ -39,8 +39,8 @@ public class ServerResponse<T> implements Serializable{
     }
 
     @JsonIgnore/*此注释会在序列化之后隐藏注释的字段，不在序列化结果之中*/
-    public boolean isSussess(){
-        return this.status == ResponserCode.SUCCESS.getCode();
+    public boolean isSuccess(){
+        return this.status == ResponseCode.SUCCESS.getCode();
     }
 
     public int getStatus() {
@@ -56,27 +56,27 @@ public class ServerResponse<T> implements Serializable{
     }
 
     public static <T> ServerResponse createBySuccess(){
-        return new ServerResponse(ResponserCode.SUCCESS.getCode());
+        return new ServerResponse(ResponseCode.SUCCESS.getCode());
     }
 
     public static <T> ServerResponse createBySuccessMsg(String msg){
-        return new ServerResponse(ResponserCode.SUCCESS.getCode(),msg);
+        return new ServerResponse(ResponseCode.SUCCESS.getCode(),msg);
     }
 
     public static <T> ServerResponse createBySuccess(T data){
-        return new ServerResponse(ResponserCode.SUCCESS.getCode(),data);
+        return new ServerResponse(ResponseCode.SUCCESS.getCode(),data);
     }
 
     public static <T> ServerResponse createBySuccess(String msg,T data){
-        return new ServerResponse(ResponserCode.SUCCESS.getCode(),msg,data);
+        return new ServerResponse(ResponseCode.SUCCESS.getCode(),msg,data);
     }
 
     public static <T> ServerResponse<T> createByError(){
-        return new ServerResponse<T>(ResponserCode.ERROR.getCode(),ResponserCode.ERROR.getDesc());
+        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),ResponseCode.ERROR.getDesc());
     }
 
     public static <T> ServerResponse<T> createByErrorMsg(String msg){
-        return new ServerResponse<T>(ResponserCode.ERROR.getCode(),msg);
+        return new ServerResponse<T>(ResponseCode.ERROR.getCode(),msg);
     }
 
     public static <T> ServerResponse<T> createByErrorCodeMsg(int errorCode,String errorMsg){
