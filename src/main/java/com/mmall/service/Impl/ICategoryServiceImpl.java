@@ -64,7 +64,7 @@ public class ICategoryServiceImpl implements ICategoryService {
         return  ServerResponse.createByErrorMsg("更新品类名字失败");
     }
 
-    public ServerResponse selectCategoryChildrenByParentId(Integer categoryId){
+    public ServerResponse<List<Category>> selectCategoryChildrenByParentId(Integer categoryId){
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
         if(CollectionUtils.isEmpty(categoryList)){
             logger.info("未找到当前分类的子分类");
@@ -77,7 +77,7 @@ public class ICategoryServiceImpl implements ICategoryService {
      * @param categoryId
      * @return
      */
-    public ServerResponse getCategoryAndDeepChildrenCategory(Integer categoryId){
+    public ServerResponse<List<Integer>> getCategoryAndDeepChildrenCategory(Integer categoryId){
         Set<Category> categorySet = Sets.newHashSet();
         findChildrenCategory(categorySet, categoryId);
 
