@@ -29,7 +29,7 @@ import java.util.List;
  * @author: RoninLee
  * @Email: zlli233@qq.com
  * @create: 2018-10-05 20:54
- * @description: 商品管理接口实现类
+ * @description: 商品管理接口的实现类
  **/
 @Service ( "iProductService" )
 public class ProductServiceImpl implements IProductService {

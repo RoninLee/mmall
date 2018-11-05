@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author: RoninLee
  * @Email: zlli233@qq.com
  * @create: 2018-10-29 21:05
- * @description: 前台产品管理Controller
+ * @description: 前台产品管理的Controller
  **/
 @Controller
 @RequestMapping("/product/")

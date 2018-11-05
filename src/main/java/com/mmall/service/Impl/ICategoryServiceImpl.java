@@ -21,7 +21,7 @@ import java.util.Set;
  * @author: RoninLee
  * @Email: zlli233@qq.com
  * @create: 2018-09-18 19:19
- * @description: 分类管理接口实现类
+ * @description: 分类管理接口的实现类
  **/
 @Service("iCategoryService")
 public class ICategoryServiceImpl implements ICategoryService {
