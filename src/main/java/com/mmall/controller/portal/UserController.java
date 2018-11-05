@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
  * Author: RoninLee
  * Email:  zlli233@qq.com
  * Date:   2018-09-04 23:53
- * Desc:
+ * Desc:   用户登录注册等功能
  */
 @Controller
 @RequestMapping("/user/")

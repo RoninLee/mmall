@@ -18,7 +18,7 @@ import java.util.UUID;
  * @author: RoninLee
  * @Email: zlli233@qq.com
  * @create: 2018-09-06 19:25
- * @description: 用户登陆API实现类
+ * @description: 用户登陆的实现类
  **/
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
