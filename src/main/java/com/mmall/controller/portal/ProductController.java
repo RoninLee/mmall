@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @create: 2018-10-29 21:05
  * @description: 前台产品管理Controller
  **/
-
 @Controller
 @RequestMapping("/product/")
 public class ProductController {
