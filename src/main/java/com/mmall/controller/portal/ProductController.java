@@ -6,6 +6,7 @@ import com.mmall.service.ICategoryService;
 import com.mmall.service.IProductService;
 import com.mmall.service.IUserService;
 import com.mmall.vo.ProductDetailVo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
