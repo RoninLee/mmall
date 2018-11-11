@@ -126,7 +126,7 @@ public class ProductServiceImpl implements IProductService {
         //填充自己的sql查询语句
         //pageHelper--收尾
         PageHelper.startPage ( pageNum, pageSize );
-        List<Product> productList = productMapper.selectList ( );
+        List<Product> productList = productMapper.selectList ();
         List<ProductListVo> productListVoList = new ArrayList<> ( );
         for ( Product product : productList ) {
             ProductListVo productListVo = assembleProductListVo ( product );
