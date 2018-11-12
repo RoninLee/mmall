@@ -44,7 +44,7 @@ public class FTPUtil {
         boolean uploaded = true;
         FileInputStream fis=null;
         //连接FTP服务器
-        if(connetServer(this.ip,this.port,this.user,this.pwd)){
+        if(connectServer(this.ip,this.port,this.user,this.pwd)){
             try {
                 ftpClient.changeWorkingDirectory(remotePath);
                 ftpClient.setBufferSize(1024);
@@ -67,8 +67,9 @@ public class FTPUtil {
         return uploaded;
     }
 
-    private boolean connetServer(String ip,int port, String user,String pwd){
+    private boolean connectServer(String ip,int port, String user,String pwd){
         boolean isSuccess = false;
+        ftpClient = new FTPClient ();
         try {
             ftpClient.connect(ip);
             isSuccess = ftpClient.login(user,pwd);
