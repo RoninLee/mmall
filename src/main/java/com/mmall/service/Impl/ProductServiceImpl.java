@@ -50,14 +50,14 @@ public class ProductServiceImpl implements IProductService {
                 }
             }
             //根据产品的id是否传参来判断是新增还是更改
-            if ( product.getId ( ) != null ) {
+            if ( product.getId() != null ) {
                 int rowCount = productMapper.updateByPrimaryKeySelective ( product );
                 if ( rowCount > 0 ) {
                     return ServerResponse.createBySuccess ( "更新产品成功" );
                 }
                 return ServerResponse.createBySuccess ( "更新产品失败" );
             } else {
-                int roeCount = productMapper.insert ( product );
+                int roeCount = productMapper.insert (product);
                 if ( roeCount > 0 ) {
                     return ServerResponse.createBySuccess ( "新增产品成功" );
                 }
@@ -210,7 +210,7 @@ public class ProductServiceImpl implements IProductService {
             }
         }
 
-        List<Product> productList = productMapper.selectByNameAndCategoryIds ( StringUtils.isBlank ( keyword ) ? null : keyword, categoryIdList.size ( ) == 0 ? null : categoryIdList );
+        List<Product> productList = productMapper.selectByNameAndCategoryIds (StringUtils.isBlank(keyword)?null:keyword, categoryIdList.size() == 0 ? null : categoryIdList);
         List<ProductListVo> productListVoList = Lists.newArrayList ( );
         for ( Product product : productList ) {
             ProductListVo productListVo = assembleProductListVo ( product );
