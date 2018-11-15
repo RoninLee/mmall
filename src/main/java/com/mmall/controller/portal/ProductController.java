@@ -47,4 +47,5 @@ public class ProductController {
                                          @RequestParam(value = "orderBy",required = false,defaultValue = "")String orderBy){
         return iProductService.getProductByKeywordCategory(keyword, categoryId, pageNum, pageSize, orderBy);
     }
+
 }
