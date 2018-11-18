@@ -25,10 +25,8 @@ public class ProductController {
 
     @Autowired
     private IUserService iUserService;
-
     @Autowired
     private IProductService iProductService;
-
     @Autowired
     private ICategoryService iCategoryService;
 
