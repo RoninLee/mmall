@@ -27,7 +27,6 @@ public class CategoryManageController {
 
     @Autowired
     private IUserService iUserServer;
-
     @Autowired
     private ICategoryService iCategoryService;
 
