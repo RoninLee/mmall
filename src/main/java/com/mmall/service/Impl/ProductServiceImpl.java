@@ -192,14 +192,14 @@ public class ProductServiceImpl implements IProductService {
             if ( category == null && StringUtils.isBlank ( keyword ) ) {
                 //没有该分类，并且还没有关键字，这时候返回一个空的结果集，不报错
                 PageHelper.startPage ( pageNum, pageSize );
-                List<ProductListVo> productListVoList = Lists.newArrayList ( );
-                PageInfo pageInfo = new PageInfo ( productListVoList );
-                return ServerResponse.createBySuccess ( pageInfo );
+                List<ProductListVo> productListVoList = Lists.newArrayList();
+                PageInfo pageInfo = new PageInfo(productListVoList);
+                return ServerResponse.createBySuccess(pageInfo);
             }
-            categoryIdList = iCategoryService.getCategoryAndDeepChildrenCategory ( category.getId ( ) ).getData ( );
+            categoryIdList = iCategoryService.getCategoryAndDeepChildrenCategory (category.getId()).getData();
         }
         if ( StringUtils.isNotBlank ( keyword ) ) {
-            keyword = new StringBuilder ( ).append ( "%" ).append ( keyword ).append ( "%" ).toString ( );
+            keyword = new StringBuilder().append ("%").append(keyword).append ("%").toString();
         }
         PageHelper.startPage ( pageNum, pageSize );
         //排序处理
