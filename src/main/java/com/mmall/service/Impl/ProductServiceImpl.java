@@ -33,6 +33,7 @@ import java.util.List;
  **/
 @Service ( "iProductService" )
 public class ProductServiceImpl implements IProductService {
+
     @Autowired
     private ProductMapper productMapper;
     @Autowired
